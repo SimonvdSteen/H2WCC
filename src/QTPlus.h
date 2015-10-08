@@ -39,7 +39,8 @@ AppTimer *qtp_hide_timer;
 int qtp_conf;
 int qtp_phone_percent;
 char qtp_calendar_events[200];
-static char qtp_calendar_events_str[] = "XXXXXXXXXXXXXXXXX";
+static char qtp_calendar_events_str[] = " No upcoming events ";
+static char qtp_events_empty[] = " No upcoming events ";
 
 // Methods
 void qtp_setup();

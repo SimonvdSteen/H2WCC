@@ -28,7 +28,7 @@ static char date_text[] = "XXX 00";
 static char time_text[] = "00:00";
 
 /* Preload the fonts */
-static GFont large_font, font_time, font_date;
+static GFont large_font, font_time, font_date, font_events;
 
 static Layer *hub_layer;
 
@@ -326,6 +326,10 @@ void make_vibes_3()  {
 void tap_timeout() {
 	tap_timer = NULL;
 	
+	//Reset font size
+	snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
+	text_layer_set_font(date_layer, font_date);
+	
 	// Put back normal value to Date text layer
 	time_t now = time(NULL);
 	handle_tick(localtime(&now), DAY_UNIT);
@@ -380,6 +384,7 @@ void set_color() {
 
 /* Handle taps from the hardware */
 void tap_handler(AccelAxisType axis, int32_t direction) {
+	text_layer_set_font(date_layer, font_events);
     text_layer_set_text(date_layer, qtp_calendar_events_str);
 	
 	if (tap_timer)
@@ -579,8 +584,14 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
       		break;
 		}
     	case CALENDAR_EVENT_NAME: {
+			snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
+			
 			strncpy(qtp_calendar_events, tuple->value->cstring, 100);
-			snprintf(qtp_calendar_events_str, sizeof(qtp_calendar_events), "%s", qtp_calendar_events);
+			//Only fetch event on actuall upcoming event.
+			if(strlen(qtp_calendar_events) != 0){
+				snprintf(qtp_calendar_events_str, sizeof(qtp_calendar_events), "%s", qtp_calendar_events);
+			}
+			
 			ask_hub2watch_to_refresh();
       		break;
 		}
@@ -969,7 +980,8 @@ static void init() {
 	  window_set_fullscreen(window, true);
   #endif
   window_set_background_color(window, GColorBlack);
-  font_date = fonts_get_system_font(FONT_KEY_GOTHIC_18);
+  font_date = fonts_get_system_font(FONT_KEY_GOTHIC_24);
+  font_events = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
   font_time = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FUTURA_CONDENSED_53));
   large_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FUTURA_35));
   window_set_window_handlers(window, (WindowHandlers) {
