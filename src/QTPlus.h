@@ -41,6 +41,7 @@ int qtp_phone_percent;
 char qtp_calendar_events[200];
 static char qtp_calendar_events_str[] = " No upcoming events ";
 static char qtp_events_empty[] = " No upcoming events ";
+static char qtp_events_btlost[] = "Not connected";
 
 // Methods
 void qtp_setup();

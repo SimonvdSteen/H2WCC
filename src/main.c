@@ -956,6 +956,9 @@ void bluetooth_handler(bool connected) {
 			if (inv_layer)
 				inverter_layer_destroy(inv_layer);
 		#endif	
+			
+		snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
+		ask_hub2watch_to_refresh();
 		set_color();
 	}
 	else {
@@ -970,6 +973,7 @@ void bluetooth_handler(bool connected) {
     		text_layer_set_text_color(time_layer, time_color);
     		text_layer_set_text_color(date_layer, time_color);
 		#endif
+		snprintf(qtp_calendar_events_str, sizeof(qtp_events_btlost), "%s", qtp_events_btlost);
 		vibes_double_pulse();
 	}
 }
