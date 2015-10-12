@@ -327,7 +327,7 @@ void tap_timeout() {
 	tap_timer = NULL;
 	
 	//Reset font size
-	snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
+	//snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
 	text_layer_set_font(date_layer, font_date);
 	
 	// Put back normal value to Date text layer
@@ -584,7 +584,7 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
       		break;
 		}
     	case CALENDAR_EVENT_NAME: {
-			snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
+			//snprintf(qtp_calendar_events_str, sizeof(qtp_events_empty), "%s", qtp_events_empty);
 			
 			strncpy(qtp_calendar_events, tuple->value->cstring, 100);
 			//Only fetch event on actuall upcoming event.
